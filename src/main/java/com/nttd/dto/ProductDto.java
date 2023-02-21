@@ -6,5 +6,5 @@ import lombok.Data;
 public class ProductDto {
     private String tipoProducto;
     private String nombre;
-    private String saldo;
+    private Double saldo;
 }
