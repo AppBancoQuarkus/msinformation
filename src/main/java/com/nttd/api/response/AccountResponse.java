@@ -21,4 +21,12 @@ public class AccountResponse {
 
     public AccountResponse() {
     }
+
+    public AccountResponse(String flag_creation, double current_amount, double starting_amount) {
+        this.flag_creation = flag_creation;
+        this.current_amount = current_amount;
+        this.starting_amount = starting_amount;
+    }
+
+    
 }

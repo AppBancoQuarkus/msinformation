@@ -1,8 +1,15 @@
 package com.nttd.service;
 
+import java.util.List;
+
+import com.nttd.api.response.AccountResponse;
+import com.nttd.api.response.OperationResponse;
 import com.nttd.dto.CustomerDto;
-import com.nttd.dto.ResponseDto;
+
+import io.smallrye.mutiny.Multi;
+import io.smallrye.mutiny.Uni;
 
 public interface InformationService {
-    ResponseDto getProducts(CustomerDto customerDto);
+   
+    public Multi<List<AccountResponse>> getProducts(CustomerDto customerDto);
 }

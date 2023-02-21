@@ -1,5 +1,7 @@
 package com.nttd.service.impl;
 
+
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,12 +13,12 @@ import com.nttd.api.OperationApi;
 import com.nttd.api.response.AccountResponse;
 import com.nttd.api.response.OperationResponse;
 import com.nttd.dto.CustomerDto;
-import com.nttd.dto.ProductDto;
-import com.nttd.dto.ResponseDto;
 import com.nttd.service.InformationService;
 
+import io.smallrye.mutiny.Multi;
+import io.smallrye.mutiny.Uni;
 import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.ws.rs.core.Response.Status;
+import jakarta.ws.rs.core.Response;
 
 @ApplicationScoped
 public class InformationServiceImpl implements InformationService {
@@ -30,12 +32,61 @@ public class InformationServiceImpl implements InformationService {
     @ConfigProperty(name = "mensaje.general")
     String mensajeGeneral;
 
-    public ResponseDto getProducts(CustomerDto customerDto) {
-        long customerId = Long.parseLong(customerDto.getCodigoCliente());
-        OperationResponse operationRequest = operationApi.getProducts(customerId,
-                true);
-        if (operationRequest.getCode() == Integer.parseInt(Status.OK.toString())
-                && operationRequest.getListaccount().size() > 0) {
+    @ConfigProperty(name = "exception.general")
+    String exceptionGeneral;
+    
+
+    @Override
+    public Multi<List<AccountResponse>> getProducts(CustomerDto customerDto) {
+ 
+            return operationApi.getProducts(customerDto.getCodigoCliente(),true)
+                .onItem().                
+                transformToMulti((prod) -> {
+                    /* 
+                    if(prod.getCode() == Response.Status.OK.getStatusCode()){
+                        obj.setCode(Response.Status.OK.getStatusCode());
+                        obj.setDescription(mensajeGeneral);
+                        List<AccountResponse> lista = new ArrayList<>();
+                        for(AccountResponse item : prod.getListaccount()){
+                            lista.add(new AccountResponse(
+                                item.getFlag_creation(),item.getCurrent_amount(),
+                                item.getStarting_amount()));                          
+                        }
+                        obj.setListaccount(lista);
+                    }else {
+                        obj.setCode(Response.Status.BAD_REQUEST.getStatusCode());
+                        obj.setDescription(exceptionGeneral);
+                    }
+                    return Uni.createFrom().item(obj);*/
+                    List<AccountResponse> lista = new ArrayList<>();
+                    for(AccountResponse item : prod.getListaccount()){
+                        lista.add(new AccountResponse(
+                            item.getFlag_creation(),item.getCurrent_amount(),
+                            item.getStarting_amount()));                          
+                    }
+                    return Multi.createFrom().item(lista);
+                });            
+      
+        
+        
+        
+                    
+                   
+                 
+
+                    /*AccountResponse obj = new AccountResponse();
+                    obj.setFlag_account(account.getFlag_account());
+                    return obj;*/
+
+               /* });
+                .call((obj) -> {
+
+
+                    return Uni.createFrom().item(new ResponseDto(200, "OK", products));
+                });*/
+        
+        
+    /*
             List<AccountResponse> accounts = operationRequest.getListaccount();
             List<ProductDto> products = new ArrayList<>();
             for (AccountResponse account : accounts) {
@@ -46,11 +97,8 @@ public class InformationServiceImpl implements InformationService {
                 productDto.setSaldo(account.getCurrent_amount());
 
                 products.add(productDto);
-            }
-            return new ResponseDto(200, "OK", products);
-        } else {
-            return new ResponseDto(204, "OK, sin contenido.", "");
-        }
+            } */
+        
 
     }
 

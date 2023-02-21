@@ -1,8 +1,10 @@
 package com.nttd.dto;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
+@Getter
+@Setter
 public class ResponseDto {
     private int code;
     private String message;

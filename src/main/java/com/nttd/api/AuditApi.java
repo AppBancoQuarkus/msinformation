@@ -5,6 +5,7 @@ import org.eclipse.microprofile.rest.client.inject.RegisterRestClient;
 import com.nttd.api.request.AuditRequest;
 import com.nttd.api.response.AuditResponse;
 
+import io.smallrye.mutiny.Uni;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
@@ -14,9 +15,9 @@ import jakarta.ws.rs.Path;
 public interface AuditApi {
 
     @GET
-    AuditResponse getAll();
+    Uni<AuditResponse> getAll();
 
     @POST
-    AuditResponse add(AuditRequest auditRequest);
+    Uni<AuditResponse> add(AuditRequest auditRequest);
 
 }
