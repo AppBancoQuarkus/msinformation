@@ -11,14 +11,11 @@ import org.eclipse.microprofile.rest.client.inject.RestClient;
 import com.nttd.api.AuditApi;
 import com.nttd.api.OperationApi;
 import com.nttd.api.response.AccountResponse;
-import com.nttd.api.response.OperationResponse;
 import com.nttd.dto.CustomerDto;
 import com.nttd.service.InformationService;
 
 import io.smallrye.mutiny.Multi;
-import io.smallrye.mutiny.Uni;
 import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.ws.rs.core.Response;
 
 @ApplicationScoped
 public class InformationServiceImpl implements InformationService {
@@ -67,13 +64,7 @@ public class InformationServiceImpl implements InformationService {
                     return Multi.createFrom().item(lista);
                 });            
       
-        
-        
-        
-                    
-                   
-                 
-
+                
                     /*AccountResponse obj = new AccountResponse();
                     obj.setFlag_account(account.getFlag_account());
                     return obj;*/
